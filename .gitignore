@@ -18,4 +18,5 @@ start.sh
 db.sqlite*
 *db.sqlite3
 
-config/local_settings.py
+# config/local_settings.py
+offline-packages/
