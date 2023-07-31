@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     'accounts.apps.AccountsConfig',
     'rest_framework',
     'easyaudit',
+    'django_celery_results',
 ]
 
 MIDDLEWARE = [
@@ -109,3 +110,20 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# CELERY STUFF
+BROKER_URL = os.environ.get('CELERY_BROKER_URL', 'redis://localhost:6379')
+# CELERY_RESULT_BACKEND = 'redis://localhost:6379'
+CELERY_RESULT_BACKEND = 'django-db'
+CELERY_CACHE_BACKEND = 'django-cache'
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_ENABLE_UTC = True
+CELERYBEAT_SCHEDULE = {
+    # 'add-every-30-seconds': {
+    #     'task': 'debug_task',
+    #     'schedule': 30.0,
+    #     'args': ()
+    # },
+}
