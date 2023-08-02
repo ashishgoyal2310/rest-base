@@ -28,6 +28,7 @@ def debug_redis_connection(self):
     redis_conn = redis.Redis(host=settings.REDIS_HOST, port=6379)
 
     retries = 3
+    count = "Zero"
     while True:
         try:
             count = redis_conn.incr('hits')

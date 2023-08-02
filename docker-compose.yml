@@ -1,0 +1,76 @@
+version: '3.3'
+services:
+  redis:
+    image: redis
+    container_name: app_redis_cont
+  # db_postgres:
+  #   image: postgres
+  #   container_name: app_postgres_cont
+  #   environment:
+  #     - POSTGRES_USER=postgres
+  #     - POSTGRES_PASSWORD=P@$$word
+  #     - POSTGRES_DB=postgres
+  #     - PGDATA=/var/lib/postgresql/data/pgdata
+  #   ports:
+  #     - "35432:5432"
+  #   volumes:
+  #     - /opt/postgresql:/var/lib/postgresql/data
+  # db:
+  #   image: mysql:8.0
+  #   container_name: app_mysql_cont
+  #   environment:
+  #     - MYSQL_ROOT_PASSWORD=P@$$word
+  #     - MYSQL_USER=xx
+  #     - MYSQL_PASSWORD=xx
+  #     - MYSQL_DATABASE=xx
+  #   ports:
+  #     - "33306:3306"
+  #   volumes:
+  #     - /opt/mysql:/var/lib/mysql
+  web:
+    build: .
+    restart: always
+    environment:
+      - APP_ENV=local
+      - REDIS_HOST=app_redis_cont
+    command: python manage.py runserver 0.0.0.0:8000
+    ports:
+      - "38000:8000"
+    volumes:
+      - ./db:/app/db
+      - ./logs:/app/logs
+    links:
+      # - db
+      - redis
+    depends_on:
+      # - db
+      - redis
+  celery:
+    build: .
+    restart: always
+    environment:
+      - APP_ENV=local
+      - REDIS_HOST=app_redis_cont
+    command: celery -A config.celery:app worker -l INFO -f ./logs/celery.log --concurrency=3
+    volumes:
+      - ./db:/app/db
+      - ./logs:/app/logs
+    links:
+      # - db
+      - redis
+    depends_on:
+      # - db
+      - redis
+  # celery-beat:
+  #   build: .
+  #   restart: always
+  #   command: celery -A config.celery:app beat -l DEBUG -f ./logs/celerybeat.log -s ./logs/celerybeat-schedule --pidfile ./logs/celerybeat.pid
+  #   volumes:
+  #     - ./db:/app/db
+  #     - ./logs:/app/logs
+  #   links:
+  #     - db
+  #     - redis
+  #   depends_on:
+  #     - db
+  #     - redis
