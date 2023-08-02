@@ -112,7 +112,8 @@ STATIC_URL = '/static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # CELERY STUFF
-BROKER_URL = os.environ.get('CELERY_BROKER_URL', 'redis://localhost:6379')
+REDIS_HOST = os.environ.get('REDIS_HOST', 'localhost')
+BROKER_URL = os.environ.get('CELERY_BROKER_URL', 'redis://{}:6379'.format(REDIS_HOST))
 # CELERY_RESULT_BACKEND = 'redis://localhost:6379'
 CELERY_RESULT_BACKEND = 'django-db'
 CELERY_CACHE_BACKEND = 'django-cache'
