@@ -22,7 +22,6 @@ RUN adduser -u 5678 --disabled-password --gecos "" appuser && chown -R appuser /
 ENV DEBUG True
 
 COPY . /app
-RUN python manage.py migrate
 
-# ENTRYPOINT ["python", "manage.py", "check"]
-CMD ["python", "manage.py", "check"]
+#ENTRYPOINT ["python", "manage.py", "migrate"]
+CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
