@@ -122,9 +122,9 @@ CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_ENABLE_UTC = True
 CELERYBEAT_SCHEDULE = {
-    # 'add-every-30-seconds': {
-    #     'task': 'debug_task',
-    #     'schedule': 30.0,
-    #     'args': ()
-    # },
+    'add-every-30-seconds': {
+        'task': 'config.celery.debug_task',
+        'schedule': 30.0,
+        'args': ()
+    },
 }
