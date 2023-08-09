@@ -130,7 +130,7 @@ CELERYBEAT_SCHEDULE = {
     },
 }
 
-if APP_ENV in ('local'):
+if False and APP_ENV in ('local'):
     from pathlib import Path
     # paths for file backend, create folders
     _root = Path(__file__).parent.resolve().parent.resolve().joinpath('logs')
