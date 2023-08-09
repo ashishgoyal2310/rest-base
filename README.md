@@ -40,7 +40,7 @@
     - docker run -d --name redis_cont redis
 
     ### Run mysql as container
-    - docker run -d --name mysql_cont -p 3306:3306 -v /opt/mysql:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=[ROOT-PASSWORD] -e MYSQL_DATABASE=mission mysql:8.0
+    - docker run -d --name mysql_cont -p 3306:3306 -v /opt/mysql:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=[ROOT-PASSWORD] -e MYSQL_DATABASE=mission -e MYSQL_USER=DevUser -e MYSQL_PASSWORD=DevPassword mysql:8.0
 
         ### Docker mysql commands
         - docker exec -it mysql_cont mysql -p[ROOT-PASSWORD]
