@@ -3,6 +3,13 @@
 - python:3.9
 - Docker
 
+## Deploy/Run as Docker Container using docker-compose
+
+- update docker-env file for DB Credentials & APP_ENV
+- docker compose up -d --build
+- docker compose logs
+
+
 ## Deploy/Run as Docker Container
 
 - docker build . -t myimage
@@ -10,6 +17,7 @@
 - docker run --name web_cont -p 38000:8000 -e APP_ENV=local myimage:latest python manage.py runserver 0.0.0.0:8000
 - docker exec web_cont python manage.py migrate
 - docker exec -it web_cont python manage.py createsuperuser
+- docker exec -it web_cont python manage.py loaddata accounts/fixtures/initial_data.json
 
 ## Run on Local Environment
 
